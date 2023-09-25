@@ -1,13 +1,11 @@
 import { connect, set } from "mongoose";
-import { config } from "dotenv";
-
-const process = config().parsed;
-const { MONGOOSE_URI } = process;
+import { config } from "../../config/config.js";
+const { port, mongoose_uri } = config;
 
 export const connectDB = async () => {
   try {
     set("strictQuery", false);
-    await connect(MONGOOSE_URI, { dbName: "ecommerce" });
+    await connect(mongoose_uri, { dbName: "ecommerce" });
 
     console.log("Connected to DB");
   } catch (error) {

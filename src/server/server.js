@@ -1,7 +1,7 @@
 import express from "express";
 import handlebars from "express-handlebars";
 import { connectDB } from "./mongo/mongo.js";
-import { config } from "dotenv";
+import { config } from "../config/config.js";
 import __dirname from "../dirname.js";
 import bodyParser from "body-parser";
 import session from "express-session";
@@ -17,10 +17,8 @@ import {
   viewsRouter,
 } from "../routes/index.js";
 
-//const
 const app = express();
-const process = config().parsed;
-const { PORT, MONGOOSE_URI } = process;
+const { port, mongoose_uri } = config;
 
 //mongo connect
 connectDB();
@@ -32,7 +30,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
   session({
     store: MongoStore.create({
-      mongoUrl: MONGOOSE_URI,
+      mongoUrl: config.mongoose_uri,
       dbName: "ecommerce",
       mongoOptions: {
         useNewUrlParser: true,
@@ -63,6 +61,6 @@ app.use("/api/products", productsRouter);
 app.use("/api/carts", cartsRouter);
 
 //server
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+app.listen(config.port, () => {
+  console.log(`Server running on port ${port}`);
 });
