@@ -2,8 +2,11 @@ import passport from "passport";
 
 import passportLocal from "passport-local";
 import GitHubStrategy from "passport-github2";
-import Managers from "../dao/managers/index.js";
-const userModel = Managers.UsersManager;
+//import Managers from "../dao/managers/index.js";
+//import UserServices from "../users/services/users.services.js"
+import { UserServices } from "../users/services/users.services.js";
+
+const userModel = UserServices;
 
 import dotenv from "dotenv";
 

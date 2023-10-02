@@ -1,4 +1,5 @@
-import Manager from "../dao/managers/index.js";
+//import Manager from "../services/users.services.js";
+import { UserServices } from "../services/users.services.js";
 
 export const getRegister = (req, res) => {
   try {
@@ -26,10 +27,9 @@ export const getLogin = (req, res) => {
 
 export const createUser = async (req, res) => {
   try {
-    const { first_name, last_name, email, age, password } =
-      req.body;
+    const { first_name, last_name, email, age, password } = req.body;
 
-    const findUser = await Manager.UsersManager.getUserByEmail(email);
+    const findUser = await UserServices.getUserByEmail(email);
 
     //si el mail ya existe, redirige al login
     if (findUser) {
@@ -44,7 +44,7 @@ export const createUser = async (req, res) => {
       password,
     };
 
-    const user = await Manager.UsersManager.userCreate(newUser);
+    const user = await UserServices.userCreate(newUser);
 
     if (!user) {
       return res.status(200).redirect("/register");
@@ -86,7 +86,7 @@ export const loginUser = async (req, res) => {
       return res.redirect("/home/products");
     }
 
-    const user = await Manager.UsersManager.userLogin(email, password);
+    const user = await UserServices.userLogin(email, password);
 
     if (!user) {
       return res.status(401).render("login", {});

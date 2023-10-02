@@ -1,15 +1,15 @@
 import { NotFoundError } from "../../errors/errors.js";
-import userModel from "../models/user.model.js";
+import userModel from "../../models/user.model.js";
 
 import { createHash, isValidPassword } from "../../utils/passwordHash.js";
 
-export class UserManager {
+class UserService {
   // Crear un nuevo usuario
   userCreate = async (newUserData) => {
     try {
       newUserData.password = createHash(newUserData.password);
 
-      const result = await userModel.create(newUserData); 
+      const result = await userModel.create(newUserData);
 
       if (!result) {
         throw new Error("FAILED TO ADD TO DATABASE");
@@ -75,3 +75,5 @@ export class UserManager {
     }
   };
 }
+
+export const UserServices = new UserService();

@@ -1,7 +1,7 @@
-import productsModel from "../models/products.model.js";
+import productsModel from "../../models/products.model.js";
 import { InputsValidationError, NotFoundError } from "../../errors/errors.js";
 
-export class ProductManager {
+class ProductsService {
   // Mostrar todos los productos con paginacion
   getProducts = async (query, options) => {
     try {
@@ -107,3 +107,5 @@ export class ProductManager {
     }
   };
 }
+
+export const ProductsServices = new ProductsService();

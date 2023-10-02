@@ -1,5 +1,6 @@
 import express from "express";
-import Managers from "../dao/managers/index.js";
+import { ProductsServices } from "../products/services/products.services.js";
+import { CartServices } from "../carts/services/carts.services.js";
 
 const Router = express.Router();
 
@@ -14,7 +15,7 @@ Router.get("/products", async (req, res) => {
       lean: true,
     };
 
-    const result = await Managers.ProductsManager.getProducts(query, options);
+    const result = await ProductsServices.getProducts(query, options);
 
     const user = req.user;
     const first_name = user.first_name;
@@ -61,7 +62,7 @@ Router.get("/products/:pid", async (req, res) => {
   try {
     const { pid } = req.params;
 
-    const product = await Managers.ProductsManager.getProductById(pid);
+    const product = await ProductsServices.getProductById(pid);
 
     res.render("productDetail", {
       style: "styles.css",
@@ -81,8 +82,7 @@ Router.get("/products/:pid", async (req, res) => {
 Router.get("/carts/:cid", async (req, res) => {
   try {
     const { cid } = req.params;
-
-    const result = await Managers.CartsManager.getCartById(cid);
+    const result = await CartServices.getCartById(cid);
 
     const cart = result.cart;
 

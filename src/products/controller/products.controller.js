@@ -1,10 +1,7 @@
-import express from "express";
-import Managers from "../dao/managers/index.js";
-
-const Router = express.Router();
+import { ProductsServices } from "../services/products.services.js";
 
 //Mostrar todos los productos
-Router.get("/", async (req, res) => {
+export const getAllProductsCtr = async (req, res) => {
   try {
     const { sort, query, page, limit } = req.query;
     const options = {
@@ -14,7 +11,7 @@ Router.get("/", async (req, res) => {
       lean: true,
     };
 
-    const products = await Managers.ProductsManager.getProducts(query, options);
+    const products = await ProductsServices.getProducts(query, options);
 
     res.send({
       status: "succes",
@@ -40,14 +37,14 @@ Router.get("/", async (req, res) => {
       error: "SOMETHING WENT WRONG",
     });
   }
-});
+};
 
 //Traer un solo prodcuto por id
-Router.get("/:pid", async (req, res) => {
+export const getProductByIdCtr = async (req, res) => {
   try {
     const { pid } = req.params;
 
-    const product = await Managers.ProductsManager.getProductById(pid);
+    const product = await ProductsServices.getProductById(pid);
 
     res.send({
       status: "succes",
@@ -61,10 +58,10 @@ Router.get("/:pid", async (req, res) => {
       error: error.message || "SOMETHING WENT WRONG",
     });
   }
-});
+};
 
 //Agrego un nuevo producto que llega por req.body
-Router.post("/", async (req, res) => {
+export const addNewProductCtr = async (req, res) => {
   try {
     const newProduct = req.body;
 
@@ -75,7 +72,7 @@ Router.post("/", async (req, res) => {
       });
     }
 
-    const result = await Managers.ProductsManager.addProduct(newProduct);
+    const result = await ProductsServices.addProduct(newProduct);
 
     res.send({
       status: "succes",
@@ -89,16 +86,16 @@ Router.post("/", async (req, res) => {
       error: error.message || "SOMETHING WENT WRONG",
     });
   }
-});
+};
 
 //Actualizar un producto
-Router.put("/:pid", async (req, res) => {
+export const updateProductCtr = async (req, res) => {
   try {
     const { pid } = req.params;
 
     const updates = req.body;
 
-    const result = await Managers.ProductsManager.updateProduct(pid, updates);
+    const result = await ProductsServices.updateProduct(pid, updates);
 
     res.send({
       status: "succes",
@@ -112,14 +109,14 @@ Router.put("/:pid", async (req, res) => {
       error: error.message || "SOMETHING WENT WRONG",
     });
   }
-});
+};
 
 // Eliminar un producto
-Router.delete("/:pid", async (req, res) => {
+export const deleteProductCtr = async (req, res) => {
   try {
     const { pid } = req.params;
 
-    const result = await Managers.ProductsManager.deleteProduct(pid);
+    const result = await ProductsServices.deleteProduct(pid);
 
     res.send({
       status: "succes",
@@ -133,6 +130,4 @@ Router.delete("/:pid", async (req, res) => {
       error: error.message || "SOMETHING WENT WRONG",
     });
   }
-});
-
-export default Router;
+};

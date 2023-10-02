@@ -1,5 +1,5 @@
 import express from "express";
-import Manager from "../dao/managers/index.js";
+import { UserServices } from "../services/users.services.js";
 import passport from "passport";
 import {
   createUserPassport,
@@ -8,7 +8,7 @@ import {
   loginUserGithub,
   loginUserPassport,
   userLogout,
-} from "../controllers/users.controller.js";
+} from "../controller/users.controller.js"; //"../controllers/users.controller.js";
 
 const Router = express.Router();
 
@@ -52,7 +52,7 @@ Router.get("/admin", async (req, res) => {
   try {
     const role = req.session.user.role;
 
-    const users = await Manager.UsersManager.getAllUser();
+    const users = await UserServices.getAllUser();
 
     if (role === "admin") {
       return res.render("admin", {

@@ -9,13 +9,15 @@ import MongoStore from "connect-mongo";
 import auth from "../utils/auth.js";
 import passport from "passport";
 import initializePassport from "../config/passport.config.js";
+import productsRouter from "../products/router/products.routes.js";
+import cartsRouter from "../carts/router/carts.routes.js";
 
 import {
-  authRouter,
-  cartsRouter,
-  productsRouter,
+  //authRouter,
   viewsRouter,
 } from "../routes/index.js";
+
+import authRouter from "../users/routes/users.routes.js";
 
 const app = express();
 const { port, mongoose_uri } = config;
